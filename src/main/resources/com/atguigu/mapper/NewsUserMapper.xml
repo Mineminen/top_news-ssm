@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
+<mapper namespace="com.atguigu.mapper.NewsUserMapper">
+
+
+
+    <select id="findByUserName" resultType="com.atguigu.pojo.NewsUser">
+        select uid,username,user_pwd,nick_name from news_user where username = #{username}
+    </select>
+
+    <select id="findByUid" resultType="com.atguigu.pojo.NewsUser">
+        select * from news_user where uid = #{uid}
+    </select>
+
+    <insert id="registUser" useGeneratedKeys="true">
+        insert into news_user(username,user_pwd,nick_name) values(#{username},#{userPwd} , #{nickName})
+    </insert>
+</mapper>

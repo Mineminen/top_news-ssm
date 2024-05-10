@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
+<mapper namespace="com.atguigu.mapper.NewsHeadlineMapper">
+
+
+    <select id="queryPage" resultType="com.atguigu.pojo.HeadlinePageVo">
+        SELECT
+        hid,
+        title,
+        type,
+        page_views,
+        TIMESTAMPDIFF(HOUR, create_time, NOW()) AS pastHours,
+        publisher
+        FROM
+        news_headline
+        WHERE
+        is_deleted = 0
+        <if test="type !=0">
+            AND type = #{type}
+        </if>
+        <if test="keyWords!=null ">
+            AND title LIKE CONCAT('%', #{keyWords}, '%')
+        </if>
+        ORDER BY
+        pastHours ASC,
+        page_views DESC
+
+    </select>
+    <select id="findByHid" resultType="com.atguigu.pojo.HeadlineDetailVo">
+        select
+        h.hid,
+        h.title,
+        h.article,
+        h.type,
+        t.tname typeName,
+        h.page_views,
+        TIMESTAMPDIFF(HOUR,h.create_time,now())  pastHours,
+        h.publisher,
+        u.nick_name author
+        from news_headline h
+        left join news_type t on h.type = t.tid
+        left join news_user u on h.publisher = u.uid
+        where hid = #{hid}
+
+    </select>
+
+
+    <insert id="insert">
+        insert into news_headline
+        values(default,#{title},#{article},#{type},#{publisher},0, now(),now() , 0)
+    </insert>
+
+    <select id="findHeadlineByHid" resultType="com.atguigu.pojo.NewsHeadline">
+        select hid,title,article,type,
+        publisher,
+        page_views pageViews,
+        create_time createTime,
+        update_time updateTime,
+        is_deleted isDeleted
+        from news_headline where hid = #{hid}
+    </select>
+
+    <update id="update">
+        update news_headline set title = #{title},
+        article = #{article},type = #{type}, update_time = now() where hid = #{hid}
+    </update>
+
+    <delete id="removeByHid">
+        delete from news_headline where hid = #{hid}
+    </delete>
+
+</mapper>
+
+

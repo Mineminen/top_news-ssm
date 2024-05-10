@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+
+    <!-- environments表示配置Mybatis的开发环境，可以配置多个环境，在众多具体环境中，使用default属性指定实际运行时使用的环境。default属性的取值是environment标签的id属性的值。 -->
+    <environments default="development">
+        <!-- environment表示配置Mybatis的一个具体的环境 -->
+        <environment id="development">
+            <!-- Mybatis的内置的事务管理器 -->
+            <transactionManager type="JDBC"/>
+            <!-- 配置数据源 -->
+            <dataSource type="POOLED">
+                <!-- 建立数据库连接的具体信息 -->
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/mybatis-example"/>
+                <property name="username" value="root"/>
+                <property name="password" value="network"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+
+        <mapper resource="mappers/EmployeeMapper.xml"/>
+    </mappers>
+
+</configuration>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
+<mapper namespace="com.atguigu.mapper.NewsTypeMapper">
+
+
+    <select id="findAllTypes" resultType="com.atguigu.pojo.NewsType">
+        select tid,tname from news_type
+    </select>
+</mapper>
